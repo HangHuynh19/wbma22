@@ -1,26 +1,17 @@
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PropTypes from 'prop-types';
 
 const ListItem = (props) => {
   return (
     <TouchableOpacity style={styles.row}>
-      <View>
+      <View style={styles.imagebox}>
         <Image
-          style={styles.imagebox}
           source={{uri: props.singleMedia.thumbnails.w160}}
           style={styles.image}
         />
       </View>
-      <View>
+      <View style={styles.textbox}>
         <Text style={styles.listTitle}>{props.singleMedia.title}</Text>
         <Text>{props.singleMedia.description}</Text>
       </View>
@@ -29,26 +20,19 @@ const ListItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   row: {
     flexDirection: 'row',
     padding: 15,
     backgroundColor: '#eee',
     borderRadius: 6,
-    marginHorizontal: 6,
+    marginHorizontal: 10,
+    marginBottom: 5,
   },
   imagebox: {
     flex: 1,
   },
   image: {
-    flex: 2,
-    width: 100,
-    height: 100,
+    flex: 1,
     borderRadius: 6,
   },
   textbox: {

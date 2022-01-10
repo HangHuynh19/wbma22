@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList} from 'react-native';
 import ListItem from './ListItem';
 
 const mediaArray = [
@@ -51,39 +43,5 @@ const List = () => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-    padding: 15,
-    backgroundColor: '#eee',
-    borderRadius: 6,
-    marginHorizontal: 6,
-  },
-  imagebox: {
-    flex: 1,
-  },
-  image: {
-    flex: 2,
-    width: 100,
-    height: 100,
-    borderRadius: 6,
-  },
-  textbox: {
-    flex: 2,
-    padding: 10,
-  },
-  listTitle: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    paddingBottom: 15,
-  },
-});
 
 export default List;
