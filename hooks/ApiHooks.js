@@ -25,11 +25,11 @@ const useMedia = () => {
     } catch (error) {
       console.error(error);
     }
-    console.log(mediaArray);
   };
+  console.log(mediaArray);
 
   useEffect(() => {
-    loadMedia(0, 5);
+    loadMedia(30, 10);
   }, []);
 
   return {mediaArray};

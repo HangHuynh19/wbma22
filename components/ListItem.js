@@ -14,7 +14,7 @@ const ListItem = (props) => {
       </View>
       <View style={styles.textbox}>
         <Text style={styles.listTitle}>{props.singleMedia.title}</Text>
-        <Text>{props.singleMedia.description}</Text>
+        <Text style={styles.content}>{props.singleMedia.description}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -23,27 +23,36 @@ const ListItem = (props) => {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    padding: 15,
-    backgroundColor: '#eee',
+    padding: 10,
+    backgroundColor: 'dimgray',
     borderRadius: 6,
     marginHorizontal: 10,
     marginBottom: 5,
   },
   imagebox: {
-    flex: 1,
+    flex: 2,
   },
   image: {
     flex: 1,
     borderRadius: 6,
+    borderBottomLeftRadius: 40,
   },
   textbox: {
-    flex: 2,
+    flex: 3,
     padding: 10,
   },
   listTitle: {
-    fontWeight: 'bold',
+    fontWeight: '900',
     fontSize: 20,
     paddingBottom: 15,
+    color: 'lightgrey',
+    fontFamily: 'Courier New',
+  },
+  content: {
+    color: 'lightgrey',
+    fontSize: 16,
+    fontFamily: 'Courier New',
+    fontWeight: '700',
   },
 });
 
