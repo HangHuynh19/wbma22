@@ -26,7 +26,6 @@ const useMedia = () => {
       console.error(error);
     }
   };
-  console.log(mediaArray);
 
   useEffect(() => {
     loadMedia();
@@ -65,7 +64,7 @@ const useUser = () => {
   const getUserByToken = async (token) => {
     try {
       const options = {
-        // method: 'GET',
+        method: 'GET',
         headers: {'x-access-token': token},
       };
       const response = await fetch(baseUrl + 'users/user', options);
