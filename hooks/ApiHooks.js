@@ -36,14 +36,13 @@ const useMedia = () => {
 
 const useLogin = () => {
   const postLogin = async (userCredentials) => {
-    // user credentials format: {username: 'someUsername', password: 'somePassword'}
-    const options = await fetch(baseUrl + 'login/', {
+    const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(userCredentials),
-    });
+    };
     try {
       const response = await fetch(baseUrl + 'login', options);
       const userData = await response.json();
@@ -79,7 +78,29 @@ const useUser = () => {
     }
   };
 
-  return {getUserByToken};
+  const postUser = async (data) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    try {
+      const response = await fetch(baseUrl + 'users', options);
+      const userData = await response.json();
+      console.log('postUser', userData);
+      if (response.ok) {
+        return userData;
+      } else {
+        throw new Error(userData.message + ': ' + userData.error);
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {getUserByToken, postUser};
 };
 
 export {useMedia, useLogin, useUser};
