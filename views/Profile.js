@@ -4,6 +4,7 @@ import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadUrl} from '../utils/variables';
+import {Avatar} from 'react-native-paper';
 
 const Profile = () => {
   const {setIsLoggedIn, user} = useContext(MainContext);
@@ -29,11 +30,7 @@ const Profile = () => {
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
       <Text>{user.username}</Text>
-      <Image
-        source={{uri: avatar}}
-        style={{width: '80%', height: '50%'}}
-        resizeMode="contain"
-      />
+      <Avatar.Image source={{uri: avatar}} size={240} />
       <Text>{user.email}</Text>
       <Text>{user.full_name}</Text>
       <Button

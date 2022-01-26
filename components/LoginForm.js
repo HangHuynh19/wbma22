@@ -1,9 +1,10 @@
 import React, {useContext} from 'react';
-import {Text, View, TextInput, Button} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {MainContext} from '../contexts/MainContext';
 import {useLogin} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TextInput, Button} from 'react-native-paper';
 
 const LoginForm = () => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -32,7 +33,7 @@ const LoginForm = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Controller
         control={control}
         rules={{
@@ -40,7 +41,8 @@ const LoginForm = () => {
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            style={{borderWidth: 1}}
+            style={styles.input}
+            mode="outlined"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -60,7 +62,8 @@ const LoginForm = () => {
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            style={{borderWidth: 1}}
+            style={styles.input}
+            mode="outlined"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -73,9 +76,20 @@ const LoginForm = () => {
       />
       {errors.password && <Text>This is required.</Text>}
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      <Button mode="contained" title="Submit" onPress={handleSubmit(onSubmit)}>
+        Submit
+      </Button>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginHorizontal: 10,
+    width: '80%',
+  },
+  input: {marginVertical: 5, height: 30},
+});
 
 export default LoginForm;

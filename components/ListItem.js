@@ -1,27 +1,24 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadUrl} from '../utils/variables';
+import {Card, Title, Paragraph} from 'react-native-paper';
+import {withTheme} from 'react-native-paper';
 
 const ListItem = ({navigation, singleMedia}) => {
   return (
-    <TouchableOpacity
+    <Card
       style={styles.row}
       onPress={() => {
         navigation.navigate('Single', {file: singleMedia});
       }}
     >
-      <View style={styles.imagebox}>
-        <Image
-          source={{uri: uploadUrl + singleMedia.thumbnails.w160}}
-          style={styles.image}
-        />
-      </View>
-      <View style={styles.textbox}>
-        <Text style={styles.listTitle}>{singleMedia.title}</Text>
-        <Text style={styles.content}>{singleMedia.description}</Text>
-      </View>
-    </TouchableOpacity>
+      <Card.Cover source={{uri: uploadUrl + singleMedia.thumbnails.w160}} />
+      <Card.Content>
+        <Title>{singleMedia.title}</Title>
+        <Paragraph>{singleMedia.description}</Paragraph>
+      </Card.Content>
+    </Card>
   );
 };
 
@@ -29,12 +26,12 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     padding: 10,
-    backgroundColor: 'dimgray',
+    backgroundColor: '#FFF9FB',
     borderRadius: 6,
     marginHorizontal: 10,
     marginBottom: 5,
   },
-  imagebox: {
+  /* imagebox: {
     flex: 2,
   },
   image: {
@@ -58,7 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Courier New',
     fontWeight: '700',
-  },
+  }, */
 });
 
 ListItem.propTypes = {
@@ -66,4 +63,4 @@ ListItem.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
 
-export default ListItem;
+export default withTheme(ListItem);

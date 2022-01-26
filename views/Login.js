@@ -12,7 +12,7 @@ import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
-import RegisterForm from '../components/RegsterForm';
+import RegisterForm from '../components/RegisterForm';
 
 const Login = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -53,6 +53,17 @@ const Login = ({navigation}) => {
       >
         <Text>Login</Text>
         <LoginForm />
+      </KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : ''}
+        style={{
+          flex: 3,
+          backgroundColor: '#fff',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Text>Register</Text>
         <RegisterForm />
       </KeyboardAvoidingView>
     </TouchableOpacity>

@@ -2,29 +2,30 @@ import React from 'react';
 import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadUrl} from '../utils/variables';
+import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 
 const Single = ({route}) => {
   const {file} = route.params;
   return (
-    <SafeAreaView style={styles.container}>
-      <Image
-        source={{uri: uploadUrl + file.filename}}
-        style={styles.image}
-        resizeMode="contain"
-      />
-      <Text>{file.title}</Text>
-      <Text>{file.description}</Text>
+    <SafeAreaView style={{marginTop: 100}}>
+      <Card>
+        <Card.Cover source={{uri: uploadUrl + file.filename}} />
+        <Card.Content>
+          <Title>{file.title}</Title>
+          <Paragraph>{file.description}</Paragraph>
+        </Card.Content>
+      </Card>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    /* flex: 1, */
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
+    //paddingTop: 40,
   },
   image: {
     width: '90%',

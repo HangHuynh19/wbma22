@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from '../views/Home';
 import Profile from '../views/Profile';
@@ -7,19 +6,41 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Single from '../views/Single';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Provider as PaperProvider} from 'react-native-paper';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const TabScreen = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      activeColor="#fff9fb"
+      barStyle={{backgroundColor: '#4B88A2'}}
+    >
       <Tab.Screen
         name="Home"
         component={Home}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
       ></Tab.Screen>
-      <Tab.Screen name="Profile" component={Profile}></Tab.Screen>
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      ></Tab.Screen>
     </Tab.Navigator>
   );
 };
@@ -47,9 +68,11 @@ const StackScreen = () => {
 
 const Navigator = () => {
   return (
-    <NavigationContainer>
-      <StackScreen />
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <StackScreen />
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
 
