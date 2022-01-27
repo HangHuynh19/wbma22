@@ -1,12 +1,16 @@
-import React from 'react';
+import {View} from 'react-native';
+import React, {useContext} from 'react';
 import {StyleSheet, Alert} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useUser} from '../hooks/ApiHooks';
 import {TextInput, Button, Card} from 'react-native-paper';
 import PropTypes from 'prop-types';
+import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const RegisterForm = ({setFormToggle}) => {
-  const {postUser, checkUsername} = useUser();
+const ModifyUser = ({navigation}) => {
+  const {user, setUser} = useContext(MainContext);
+  const {checkUsername, putUser} = useUser();
 
   const {
     control,
@@ -15,11 +19,11 @@ const RegisterForm = ({setFormToggle}) => {
     getValues,
   } = useForm({
     defaultValues: {
-      username: '',
+      username: user.username,
       password: '',
       confirmPassword: '',
-      email: '',
-      full_name: '',
+      email: user.email,
+      full_name: user.full_name,
     },
     mode: 'onBlur',
   });
@@ -28,11 +32,13 @@ const RegisterForm = ({setFormToggle}) => {
     console.log(data);
     try {
       delete data.confirmPassword;
-      const userData = await postUser(data);
-      console.log('register onSubmit', userData);
+      const userToken = await AsyncStorage.getItem('userToken');
+      const userData = await putUser(data, userToken);
       if (userData) {
-        Alert.alert('Sucess', 'User created successfully.');
-        setFormToggle(true);
+        Alert.alert('Success', userData.message);
+        delete data.password;
+        setUser(data);
+        navigation.navigate('Profile');
       }
     } catch (error) {
       console.log(error);
@@ -52,7 +58,10 @@ const RegisterForm = ({setFormToggle}) => {
           validate: async (value) => {
             try {
               const available = await checkUsername(value);
-              return available ? true : 'This username is taken.';
+
+              return available || user.username === value
+                ? true
+                : 'This username is taken.';
             } catch (error) {
               throw new Error(error.message);
             }
@@ -76,7 +85,6 @@ const RegisterForm = ({setFormToggle}) => {
       <Controller
         control={control}
         rules={{
-          required: {value: true, message: 'This is required'},
           pattern: {
             value: '/(?=.*[\\p{Lu}])(?=.*[0-9]).{8,}/u',
             message: '',
@@ -187,8 +195,8 @@ const styles = StyleSheet.create({
   input: {marginVertical: 5, height: 30},
 });
 
-RegisterForm.propTypes = {
-  setFormToggle: PropTypes.func,
+ModifyUser.propTypes = {
+  navigation: PropTypes.object,
 };
 
-export default RegisterForm;
+export default ModifyUser;

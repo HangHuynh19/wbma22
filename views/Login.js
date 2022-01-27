@@ -1,8 +1,7 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Platform,
-  Text,
   KeyboardAvoidingView,
   TouchableOpacity,
   Keyboard,
@@ -13,8 +12,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import {Card, ToggleButton} from 'react-native-paper';
 
 const Login = ({navigation}) => {
+  const [formToggle, setFormToggle] = useState(true);
+  const [value, setValue] = useState('Register');
   const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
 
@@ -47,24 +49,41 @@ const Login = ({navigation}) => {
       style={{flex: 1}}
       activeOpacity={1}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : ''}
-        style={styles.container}
-      >
-        <Text>Login</Text>
-        <LoginForm />
-      </KeyboardAvoidingView>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : ''}
-        style={{
-          flex: 3,
-          backgroundColor: '#fff',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text>Register</Text>
-        <RegisterForm />
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''}>
+        <ToggleButton.Row
+          onValueChange={(value) => {
+            setValue(value);
+            value === 'Register'
+              ? setFormToggle(true)
+              : value === null
+              ? setFormToggle(formToggle)
+              : setFormToggle(false);
+          }}
+          value={value}
+        >
+          <ToggleButton
+            icon="account-plus"
+            value="Register"
+            style={{width: '50%'}}
+          />
+          <ToggleButton icon="login" value="Login" style={{width: '50%'}} />
+        </ToggleButton.Row>
+
+        {formToggle ? (
+          <Card>
+            <Card.Content style={{alignItems: 'center'}}>
+              <Card.Title title="Register" />
+              <RegisterForm setFormToggle={setFormToggle} />
+            </Card.Content>
+          </Card>
+        ) : (
+          <Card>
+            <Card.Content style={{alignItems: 'center'}}>
+              <Card.Title title="Login" />
+              <LoginForm />
+            </Card.Content>
+          </Card>
+        )}
       </KeyboardAvoidingView>
     </TouchableOpacity>
   );

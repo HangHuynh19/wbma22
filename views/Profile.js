@@ -1,12 +1,20 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, SafeAreaView, Text, Button, Image} from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  Button,
+  Image,
+  Alert,
+} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadUrl} from '../utils/variables';
 import {Avatar} from 'react-native-paper';
+import PropTypes from 'prop-types';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const {setIsLoggedIn, user} = useContext(MainContext);
   const [avatar, setAvatar] = useState('http://placekitten.com/640');
   const {getFilesByTag} = useTag();
@@ -18,7 +26,7 @@ const Profile = () => {
       const avatar = avatarArray.pop();
       setAvatar(uploadUrl + avatar.filename);
     } catch (error) {
-      console.error(error.message);
+      console.log(error.message);
     }
   };
 
@@ -40,6 +48,12 @@ const Profile = () => {
           setIsLoggedIn(false);
         }}
       />
+      <Button
+        title="Modify user"
+        onPress={() => {
+          navigation.navigate('Modify user');
+        }}
+      />
     </SafeAreaView>
   );
 };
@@ -53,5 +67,9 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
 });
+
+Profile.propTypes = {
+  navigation: PropTypes.object,
+};
 
 export default Profile;
