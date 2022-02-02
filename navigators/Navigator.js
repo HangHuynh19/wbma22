@@ -10,6 +10,8 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Provider as PaperProvider} from 'react-native-paper';
 import ModifyUser from '../views/ModifyUser';
+import {Icon} from 'react-native-elements';
+import Upload from '../views/Upload';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -17,8 +19,23 @@ const Stack = createNativeStackNavigator();
 const TabScreen = () => {
   return (
     <Tab.Navigator
-      activeColor="#fff9fb"
-      barStyle={{backgroundColor: '#4B88A2'}}
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+          switch (route.name) {
+            case 'Home':
+              iconName = 'home';
+              break;
+            case 'Upload':
+              iconName = 'cloud-upload';
+              break;
+            case 'Profile':
+              iconName = 'account-box';
+              break;
+          }
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+      })}
     >
       <Tab.Screen
         name="Home"
@@ -26,9 +43,14 @@ const TabScreen = () => {
         options={{
           headerShown: false,
           tabBarLabel: 'Home',
-          tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
+        }}
+      ></Tab.Screen>
+      <Tab.Screen
+        name="Upload"
+        component={Upload}
+        options={{
+          headerShown: true,
+          tabBarLabel: 'Upload',
         }}
       ></Tab.Screen>
       <Tab.Screen
@@ -37,9 +59,6 @@ const TabScreen = () => {
         options={{
           headerShown: false,
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
-          ),
         }}
       ></Tab.Screen>
     </Tab.Navigator>
