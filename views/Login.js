@@ -13,6 +13,8 @@ import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import {Card, ToggleButton} from 'react-native-paper';
+import Logo from '../assets/logo.svg';
+import {View} from 'react-native-web';
 
 const Login = ({navigation}) => {
   const [formToggle, setFormToggle] = useState(true);
@@ -50,6 +52,9 @@ const Login = ({navigation}) => {
       activeOpacity={1}
     >
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''}>
+        <Card>
+          <Logo height="100" width="100" style={{alignSelf: 'center'}} />
+        </Card>
         <ToggleButton.Row
           onValueChange={(value) => {
             setValue(value);
