@@ -14,7 +14,6 @@ import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import {Card, ToggleButton} from 'react-native-paper';
 import Logo from '../assets/logo.svg';
-import {View} from 'react-native-web';
 
 const Login = ({navigation}) => {
   const [formToggle, setFormToggle] = useState(true);

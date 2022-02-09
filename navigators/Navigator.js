@@ -7,7 +7,6 @@ import Single from '../views/Single';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Provider as PaperProvider} from 'react-native-paper';
 import ModifyUser from '../views/ModifyUser';
 import {Icon} from 'react-native-elements';

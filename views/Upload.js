@@ -85,6 +85,7 @@ const Upload = ({navigation}) => {
     try {
       const token = await AsyncStorage.getItem('userToken');
       const response = await postMedia(formData, token);
+      console.log('form data', formData);
       console.log('upload response', response);
       const tagResponse = await postTag(
         {file_id: response.file_id, tag: appId},
