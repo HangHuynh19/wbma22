@@ -11,6 +11,8 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import ModifyUser from '../views/ModifyUser';
 import {Icon} from 'react-native-elements';
 import Upload from '../views/Upload';
+import MyFiles from '../views/MyFiles';
+import Modify from '../views/Modify';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -81,6 +83,8 @@ const StackScreen = () => {
             name="Modify user"
             component={ModifyUser}
           ></Stack.Screen>
+          <Stack.Screen name="My Files" component={MyFiles}></Stack.Screen>
+          <Stack.Screen name="Modify" component={Modify}></Stack.Screen>
         </>
       ) : (
         <Stack.Screen name="Login" component={Login}></Stack.Screen>

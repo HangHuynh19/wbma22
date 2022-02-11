@@ -54,6 +54,12 @@ const Profile = ({navigation}) => {
           navigation.navigate('Modify user');
         }}
       />
+      <Button
+        title="My Files"
+        onPress={() => {
+          navigation.navigate('My Files');
+        }}
+      />
     </SafeAreaView>
   );
 };

@@ -16,6 +16,8 @@ import {useFavorite, useTag, useUser} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useState} from 'react';
 import {useEffect} from 'react';
+import {useContext} from 'react';
+import {MainContext} from '../contexts/MainContext';
 
 const Single = ({route}) => {
   const {file} = route.params;
@@ -27,6 +29,7 @@ const Single = ({route}) => {
   const {getFilesByTag} = useTag();
   const [likes, setLikes] = useState([]);
   const [userLike, setUserLike] = useState(false);
+  const {user} = useContext(MainContext);
 
   const fetchOwner = async () => {
     try {
@@ -56,6 +59,9 @@ const Single = ({route}) => {
     try {
       const likesData = await getFavoriteByFileId(file.user_id);
       setLikes(likesData);
+      likesData.forEach((like) => {
+        like.user_id === user.user_id && setUserLike(true);
+      });
     } catch (error) {
       console.error('fetchLikes error', error.message);
     }
@@ -64,7 +70,8 @@ const Single = ({route}) => {
   const createFavorite = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await postFavorite(file.user_id, token);
+      const response = await postFavorite(file.user_id, token);
+      response && setUserLike(true);
     } catch (error) {
       console.error('createFavorite error', error);
       setOwner({username: '[not available]'});
@@ -74,7 +81,8 @@ const Single = ({route}) => {
   const removeFavorite = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await postFavorite(file.user_id, token);
+      const response = await postFavorite(file.user_id, token);
+      response && setUserLike(false);
     } catch (error) {
       console.error('removeFavorite error', error);
       setOwner({username: '[not available]'});
@@ -84,8 +92,11 @@ const Single = ({route}) => {
   useEffect(() => {
     fetchOwner();
     fetchAvatar();
-    fetchLikes();
   }, []);
+
+  useEffect(() => {
+    fetchLikes();
+  }, [userLike]);
 
   return (
     <SafeAreaView style={{marginTop: 100}}>
@@ -96,7 +107,7 @@ const Single = ({route}) => {
         ) : (
           <Video
             ref={videoRef}
-            style={styles.image}
+            style={{height: 200}}
             source={{
               uri: uploadUrl + file.filename,
             }}
